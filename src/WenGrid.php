@@ -6,7 +6,7 @@
  * Time: 15:27
  */
 
-namespace vendor\WenGrid;
+namespace wenvender\wengrid;
 
 
 use Closure;

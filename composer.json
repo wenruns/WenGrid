@@ -1,18 +1,18 @@
 {
-    "name": "vendor/WenGrid",
+    "name": "wenvender/wengrid",
     "description": "test by myself",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "wenruns",
-            "email": "hww@8kqw.com"
+            "email": "1562194488@qq.com"
         }
     ],
     "require": {},
     "autoload": {
         "psr-4": {
-            "vendor\\WenGrid\\": "src/"
+            "wenvender\\wengrid\\": "src/"
         }
     }
 }

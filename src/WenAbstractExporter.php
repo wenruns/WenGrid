@@ -6,7 +6,7 @@
  * Time: 19:22
  */
 
-namespace vendor\WenGrid;
+namespace wenvender\wengrid;
 
 
 use Encore\Admin\Grid\Exporters\AbstractExporter;

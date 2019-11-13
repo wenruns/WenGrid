@@ -6,7 +6,7 @@
  * Time: 15:48
  */
 
-namespace vendor\WenGrid;
+namespace wenvender\wengrid;
 
 
 use Encore\Admin\Facades\Admin;
