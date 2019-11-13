@@ -29,7 +29,7 @@ abstract class WenAbstractExporter extends AbstractExporter
      */
     public function setPerPage()
     {
-        return 150;
+        return 1000;
     }
 
     public function setAttr($head, $body, $fileName, $type = 'xlsx')
