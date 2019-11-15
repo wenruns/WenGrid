@@ -6,7 +6,7 @@
  * Time: 10:50
  */
 
-namespace wenvender\wengrid;
+namespace vendor\WenGrid;
 
 
 use Encore\Admin\Grid\Filter;

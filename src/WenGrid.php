@@ -6,23 +6,22 @@
  * Time: 15:27
  */
 
-namespace wenvender\wengrid;
+namespace vendor\WenGrid;
 
 
 use Closure;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Input;
 
 class WenGrid extends Grid
 {
 
-    protected $fileName = null;
-
-    protected $body = [];
-
-    protected $head = [];
-
+    protected $wenOptins = [
+        'show_import' => false
+    ];
 
     public function __construct(Eloquent $model, Closure $builder = null)
     {
@@ -46,9 +45,41 @@ class WenGrid extends Grid
     }
 
 
+    public function wenOptions($key, $value = null)
+    {
+        if (is_null($value)) {
+            return $this->wenOptins[$key];
+        }
+        $this->wenOptins[$key] = $value;
+        return $this;
+    }
+
+    public function showImporterBtn()
+    {
+        return $this->wenOptions('show_import');
+    }
+
+    public function showImporter(bool $show = true)
+    {
+        return $this->wenOptions('show_import', $show);
+    }
+
     public function renderExportButton()
     {
         return (new WenExportButton($this))->render();
+    }
+
+    public function getImportUrl()
+    {
+        return $this->getExportUrl().'import';
+    }
+
+    protected function handleImportRequest($scope)
+    {
+        if ($scope != 'import') {
+            return;
+        }
+        $this->exporter->importRun($this);
     }
 
     /**
@@ -57,7 +88,7 @@ class WenGrid extends Grid
      */
     protected function handleExportRequest($forceExport = false)
     {
-        //dump('handleExportRequest---');
+//        dump('handleExportRequest---');
         if (!$scope = request(Grid\Exporter::$queryName)) {
             return;
         }
@@ -66,14 +97,17 @@ class WenGrid extends Grid
         if (ob_get_length()) {
             ob_end_clean();
         }
+
         $this->model()->usePaginate(false);
+
         if ($this->builder) {
             call_user_func($this->builder, $this);
 
             return $this->getExporter($scope)->export();
         }
-
         if ($forceExport) {
+            $this->handleImportRequest($scope);
+
             $res = $this->getExporter($scope)->export();
             if (is_array($res)) {
                 echo json_encode($res);
@@ -88,8 +122,7 @@ class WenGrid extends Grid
 
     public function render()
     {
-        $result = $this->handleExportRequest(true);
-
+        $this->handleExportRequest(true);
         try {
             $this->build();
         } catch (\Exception $e) {

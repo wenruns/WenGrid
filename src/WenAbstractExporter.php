@@ -6,10 +6,16 @@
  * Time: 19:22
  */
 
-namespace wenvender\wengrid;
+namespace vendor\WenGrid;
 
 
+use Encore\Admin\Grid;
 use Encore\Admin\Grid\Exporters\AbstractExporter;
+use Encore\Admin\Layout\Content;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\MessageBag;
+use Maatwebsite\Excel\Facades\Excel;
 
 abstract class WenAbstractExporter extends AbstractExporter
 {
@@ -29,9 +35,16 @@ abstract class WenAbstractExporter extends AbstractExporter
      */
     public function setPerPage()
     {
-        return 1000;
+        return 500;
     }
 
+    /**
+     * @param $head
+     * @param $body
+     * @param $fileName
+     * @param string $type
+     * 设置导出excel属性
+     */
     public function setAttr($head, $body, $fileName, $type = 'xlsx')
     {
         $this->head = $head;
@@ -41,12 +54,28 @@ abstract class WenAbstractExporter extends AbstractExporter
     }
 
 
+    /**
+     * @return string 或 array
+     * 允许在excel末尾输出字符串，可以返回一个数组或者字符串
+     */
     public function setFooter()
     {
         return '';
     }
 
+    /**
+     * @return string
+     * 允许excel表头输出字符串，可以返回一个数组或字符串
+     */
+    public function setHeader()
+    {
+        return '';
+    }
 
+    /**
+     * @return string
+     * 设置格式化方法，返回一个JavaScript匿名方法，参数一个数据集合和body字段
+     */
     public function setFormat() {
         return <<<SCRIPT
     function(item, field){
@@ -64,11 +93,19 @@ abstract class WenAbstractExporter extends AbstractExporter
 SCRIPT;
     }
 
+    /**
+     * @return array|mixed
+     * 返回查询结果
+     */
     public function export()
     {
         return $this->response($this->makeData());
     }
 
+    /**
+     * @return mixed
+     * 获取数组
+     */
     protected function makeData()
     {
         $data = $this->format($this->getData(true));
@@ -76,6 +113,11 @@ SCRIPT;
         return $data;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     * 预留数据处理回调
+     */
     public function format($data)
     {
         return $data;
@@ -93,12 +135,14 @@ SCRIPT;
         return $this->grid->getFilter()->execute($toArray, $this->getExportOptions());
     }
 
-//    protected $message = '';
 
+    /**
+     * @return array
+     * 分页查询处理
+     */
     protected function getExportOptions()
     {
         $this->grid->model()->usePaginate(false);
-//        dump(request()->toArray());
         $limitNum = $this->setPerPage(); // 每次查询最大限制，防止服务器内存溢出问题
         $scope = request('_export_'); // 导出标志（全部：all，当前页：page:n，选择行：selected:ids，指定范围页：page:）
         $nowPage = request('pageN');
@@ -117,11 +161,9 @@ SCRIPT;
                 $limitNum = $totalNum;
             }
             $offset += $nowPage * $limitNum; // 导出第几页
-//            dump($pages, $perPage, $limitNum, $offset, $totalNum, $nowPage);
-//            $this->message = 'pages:'.$pages.'-perpage:'.$perPage.'-limitNum:'.$limitNum.'-offset:'.$offset.'-totalNum:'.$totalNum.'-nowPage'.$nowPage;
-        } else if (strpos($scope, 'selected:') !== false) {
+        } else if (strpos($scope, 'selected:') !== false) { // 导出选择行
             $offset = $nowPage * $limitNum;
-        } else {
+        } else { // 导出全部
             $offset = $nowPage * $limitNum;
         }
         return [
@@ -171,5 +213,39 @@ SCRIPT;
     public function getType()
     {
         return $this->fileType;
+    }
+
+    public function setImportTypes()
+    {
+        return ['xlsx', 'xls'];
+    }
+
+    public function importRun(Grid $grid)
+    {
+        $file = Input::file('import');
+//        $type = $file->getMimeType();
+        $data = [];
+        if ($file) {
+            $originName = $file->getClientOriginalName();
+            $fileType = substr($originName, strrpos($originName, '.')+1);
+            if (!in_array($fileType, $this->setImportTypes())) {
+                echo admin_toastr('文件格式不正确', 'error');
+                echo redirect($grid->resource())->sendHeaders();
+                exit(0);
+            }
+            $data = Excel::load($file->getRealPath())->all()->toArray();
+        }
+        $response = $this->import($data);
+        if ($response instanceof RedirectResponse) {
+            echo $response->sendHeaders();
+        } else {
+            echo redirect($grid->resource())->sendHeaders();
+        }
+        exit(0);
+    }
+
+    public function import(array $data){
+//        dd($data);
+//        return redirect(route('admin.apply_form'));
     }
 }
