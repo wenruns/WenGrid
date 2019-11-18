@@ -292,7 +292,7 @@ EOT;
 
     protected function exportBtn()
     {
-        if(!$this->grid->showExportBtn()){
+        if (!$this->grid->showExportBtn()) {
             return '';
         }
         $this->setUpScripts();
@@ -321,12 +321,20 @@ EOT;
     }
 
 
-
     protected function setImportScript($prefix = '')
     {
         $DS = DIRECTORY_SEPARATOR == '\\' ? '\\\\' : '/';
         $types = json_encode($this->grid->getWenExporter()->setImportTypes());
         $script = <<<SCRIPT
+        
+        function admin_toastr(msg, type = 'error'){
+            $('.{$prefix}wen-tips-message-box{$this->key}').html(msg);
+            $('.{$prefix}wen-tips-box{$this->key}').addClass('{$prefix}wen-tips-box-show{$this->key}');
+            var hand = setTimeout(function(){
+                $('.{$prefix}wen-tips-box{$this->key}').removeClass('{$prefix}wen-tips-box-show{$this->key}');           
+                clearTimeout(hand);     
+            },3000);
+        }
         
         $('.{$prefix}wen-input-cancel-button{$this->key}').click(function(e){
             $('#{$prefix}wen-import-input{$this->key}').val('');
@@ -340,7 +348,7 @@ EOT;
                 name = file.name;
                 var type = name.substring(name.lastIndexOf('.')+1);
                 if({$types}.indexOf(type) < 0){
-                    alert('文件格式不正确！');
+                    admin_toastr('文件格式不正确！');
                     return ;
                 }
                 var reader = new FileReader();
@@ -360,10 +368,9 @@ SCRIPT;
 
     protected function importBtn()
     {
-        if(!$this->grid->showImporterBtn()){
+        if (!$this->grid->showImporterBtn()) {
             return '';
         }
-
         $prefix = 'impot_';
         $this->setImportScript($prefix);
         $url = $this->grid->getImportUrl();
@@ -423,6 +430,29 @@ SCRIPT;
         overflow: auto;
         margin: auto;
     }
+    .{$prefix}wen-tips-box{$this->key}{
+        position: fixed;
+        z-index: 10000;
+        min-width: 200px;
+        background: deepskyblue;
+        color: white;
+        right: 10px;
+        top: -500px;
+        padding: 10px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -ms-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+    
+    .{$prefix}wen-tips-box-show{$this->key}{
+        top: 10px;
+    }
+    
 </style>
 
 <div class="{$prefix}wen-import-box{$this->key}">
@@ -456,6 +486,10 @@ SCRIPT;
                 <button type="submit" class="btn btn-primary {$prefix}wen-import-sure-button{$this->key}">确定</button>
             </div>
         </form>
+    </div>
+    <div class="{$prefix}wen-tips-box{$this->key}">
+        <div class="{$prefix}wen-tips-title-box{$this->key}"></div>
+        <div class="{$prefix}wen-tips-message-box{$this->key}"></div>
     </div>
 </div>
 EOT;

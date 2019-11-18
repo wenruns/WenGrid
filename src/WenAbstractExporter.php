@@ -226,16 +226,16 @@ SCRIPT;
 //        $type = $file->getMimeType();
         $data = [];
         if ($file) {
-            $originName = $file->getClientOriginalName();
-            $fileType = substr($originName, strrpos($originName, '.')+1);
-            if (!in_array($fileType, $this->setImportTypes())) {
-                echo admin_toastr('文件格式不正确', 'error');
-                echo redirect($grid->resource())->sendHeaders();
-                exit(0);
-            }
+//            $originName = $file->getClientOriginalName();
+//            $fileType = substr($originName, strrpos($originName, '.')+1);
+//            if (!in_array($fileType, $this->setImportTypes())) {
+//                echo redirect($grid->resource())->sendHeaders();
+//                exit(0);
+//            }
             $data = Excel::load($file->getRealPath())->all()->toArray();
         }
         $response = $this->import($data);
+
         if ($response instanceof RedirectResponse) {
             echo $response->sendHeaders();
         } else {

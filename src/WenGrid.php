@@ -88,10 +88,14 @@ class WenGrid extends Grid
      */
     protected function handleExportRequest($forceExport = false)
     {
+        if (session('toastr')) {
+            dd(session('toastr'), session('_flash.new'), session('_flash.old'));
+        }
 //        dump('handleExportRequest---');
         if (!$scope = request(Grid\Exporter::$queryName)) {
             return;
         }
+
 
         // clear output buffer.
         if (ob_get_length()) {
