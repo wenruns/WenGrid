@@ -330,8 +330,10 @@ EOT;
         function admin_toastr(msg, type = 'error'){
             $('.{$prefix}wen-tips-message-box{$this->key}').html(msg);
             $('.{$prefix}wen-tips-box{$this->key}').addClass('{$prefix}wen-tips-box-show{$this->key}');
+            $('.{$prefix}wen-tips-box{$this->key}').addClass('{$prefix}wen-tips-'+type+'-box{$this->key}');
             var hand = setTimeout(function(){
-                $('.{$prefix}wen-tips-box{$this->key}').removeClass('{$prefix}wen-tips-box-show{$this->key}');           
+                $('.{$prefix}wen-tips-box{$this->key}').removeClass('{$prefix}wen-tips-box-show{$this->key}');       
+                $('.{$prefix}wen-tips-box{$this->key}').removeClass('{$prefix}wen-tips-'+type+'-box{$this->key}');    
                 clearTimeout(hand);     
             },3000);
         }
@@ -362,6 +364,10 @@ EOT;
             }
             $('#{$prefix}wen-import-input-show{$this->key}').val(name);
         });
+        
+        $('.{$prefix}wen-import-button{$this->key}').click(function(e){
+            $('.{$prefix}wen-import-box{$this->key}').show();
+        });
 SCRIPT;
         Admin::script($script);
     }
@@ -376,12 +382,13 @@ SCRIPT;
         $url = $this->grid->getImportUrl();
         $csrf_field = csrf_field();
         return <<<EOT
-<div class="btn-group pull-right" style="margin-right: 10px">
+<div class="btn-group pull-right {$prefix}wen-import-button{$this->key}" style="margin-right: 10px">
     <a class="btn btn-sm btn-twitter" title="导入"><i class="fa fa-download"></i><span class="hidden-xs"> 导入</span></a>
 </div>
 <style>
     .{$prefix}wen-import-box{$this->key}{
         position: absolute;
+        display: none;
     }
     .{$prefix}wen-import-file-bg{$this->key}{
         position: fixed;
@@ -434,8 +441,6 @@ SCRIPT;
         position: fixed;
         z-index: 10000;
         min-width: 200px;
-        background: deepskyblue;
-        color: white;
         right: 10px;
         top: -500px;
         padding: 10px;
@@ -451,6 +456,15 @@ SCRIPT;
     
     .{$prefix}wen-tips-box-show{$this->key}{
         top: 10px;
+    }
+    
+    .{$prefix}wen-tips-success-box{$this->key}{
+        background: deepskyblue;
+        color: white;
+    }
+    .{$prefix}wen-tips-error-box{$this->key}{
+        background: #E98582;
+        color: white;
     }
     
 </style>
