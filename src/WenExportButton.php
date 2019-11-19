@@ -324,8 +324,28 @@ EOT;
     protected function setImportScript($prefix = '')
     {
         $DS = DIRECTORY_SEPARATOR == '\\' ? '\\\\' : '/';
-        $types = json_encode($this->grid->getWenExporter()->setImportTypes());
+        $types = $this->grid->getWenExporter()->setImportTypes();
+        if (!$types) {
+            $types = ['*'];
+        } else if (is_string($types)) {
+            $types = explode(',', $types);
+        }
+        $types = json_encode($types);
         $script = <<<SCRIPT
+        var {$prefix}show{$this->key} = function(){
+            $('.{$prefix}wen-import-box{$this->key}').show();
+        }
+        
+        var {$prefix}hide{$this->key} = function(){
+            {$prefix}clear{$this->key}();
+            $('.{$prefix}wen-import-box{$this->key}').hide();
+        }
+        
+        var {$prefix}clear{$this->key} = function(){
+            $('#{$prefix}wen-import-preview{$this->key}').html('');
+            $('#{$prefix}wen-import-input-show{$this->key}').val('');
+            $('#{$prefix}wen-import-input{$this->key}').val('');
+        }
         
         function admin_toastr(msg, type = 'error'){
             $('.{$prefix}wen-tips-message-box{$this->key}').html(msg);
@@ -349,8 +369,9 @@ EOT;
                 var file = e.currentTarget.files[0];
                 name = file.name;
                 var type = name.substring(name.lastIndexOf('.')+1);
-                if({$types}.indexOf(type) < 0){
-                    admin_toastr('文件格式不正确！');
+                if({$types}.indexOf('*') < 0 && {$types}.indexOf(type) < 0){
+                    {$prefix}clear{$this->key}();
+                    admin_toastr('文件格式不正确！', 'error');
                     return ;
                 }
                 var reader = new FileReader();
@@ -366,7 +387,14 @@ EOT;
         });
         
         $('.{$prefix}wen-import-button{$this->key}').click(function(e){
-            $('.{$prefix}wen-import-box{$this->key}').show();
+            {$prefix}show{$this->key}();
+        });
+        
+        $('.{$prefix}wen-import-file-bg{$this->key}').click(function(e){
+            {$prefix}hide{$this->key}();
+        });
+        $('.{$prefix}wen-importcancel-button{$this->key}').click(function(e){
+            {$prefix}hide{$this->key}();
         });
 SCRIPT;
         Admin::script($script);
@@ -441,8 +469,9 @@ SCRIPT;
         position: fixed;
         z-index: 10000;
         min-width: 200px;
+        height: 60px;
         right: 10px;
-        top: -500px;
+        top: -60px;
         padding: 10px;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
@@ -496,7 +525,7 @@ SCRIPT;
             </div>
             <div id="{$prefix}wen-import-preview{$this->key}"></div>
             <div class="{$prefix}wen-import-btn-box{$this->key}">
-                <button type="button" class="btn btn-warning">取消</button>
+                <button type="button" class="btn btn-warning {$prefix}wen-importcancel-button{$this->key}">取消</button>
                 <button type="submit" class="btn btn-primary {$prefix}wen-import-sure-button{$this->key}">确定</button>
             </div>
         </form>

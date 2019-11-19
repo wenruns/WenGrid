@@ -223,15 +223,8 @@ SCRIPT;
     public function importRun(Grid $grid)
     {
         $file = Input::file('import');
-//        $type = $file->getMimeType();
         $data = [];
         if ($file) {
-//            $originName = $file->getClientOriginalName();
-//            $fileType = substr($originName, strrpos($originName, '.')+1);
-//            if (!in_array($fileType, $this->setImportTypes())) {
-//                echo redirect($grid->resource())->sendHeaders();
-//                exit(0);
-//            }
             $data = Excel::load($file->getRealPath())->all()->toArray();
         }
         $response = $this->import($data);
@@ -244,8 +237,5 @@ SCRIPT;
         exit(0);
     }
 
-    public function import(array $data){
-//        dd($data);
-//        return redirect(route('admin.apply_form'));
-    }
+    public function import(array $data){}
 }
