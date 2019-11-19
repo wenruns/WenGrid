@@ -1,5 +1,5 @@
 {
-    "name": "wengrid",
+    "name": "wen-grid/wen-grid",
     "description": "test by myself",
     "type": "library",
     "license": "Apache-2.0",
@@ -9,7 +9,9 @@
             "email": "1562194488@qq.com"
         }
     ],
-    "require": {},
+    "require": {
+
+    },
     "autoload": {
         "psr-4": {
             "wengrid\\": "src/"
