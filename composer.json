@@ -1,6 +1,6 @@
 {
-    "name": "wen-grid/wen-grid",
-    "description": "test by myself",
+    "name": "wenruns/wen-grid",
+    "description": "针对于一些低端服务器或导出数据过大时出现内存不足的情况的解决方案",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
