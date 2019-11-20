@@ -59,7 +59,7 @@ class WenGrid extends Grid
         return $this->wenOptions('show_import');
     }
 
-    public function showImporter(bool $show = true)
+    public function showImporter($show = true)
     {
         return $this->wenOptions('show_import', $show);
     }
