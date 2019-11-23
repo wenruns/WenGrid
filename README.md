@@ -14,7 +14,7 @@
 （3）示例
  <h5>导出类TestExporter</h5>
 class TestExporter extends WenAbstractExporter{<br/>
-&emsp;/\*\*<br/>
+&emsp;/**<br/>
 &emsp;* @return int<br/>
 &emsp;* 设置每次查询条数<br/>
 &emsp;* （默认为500）<br/>
