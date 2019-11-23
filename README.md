@@ -14,7 +14,7 @@
 （3）示例
  <h5>导出类TestExporter</h5>
 class TestExporter extends WenAbstractExporter{<br/>
-&emsp;/**<br/>
+&emsp;/****<br/>
 &emsp;* @return int<br/>
 &emsp;* 设置每次查询条数<br/>
 &emsp;* （默认为500）<br/>
@@ -24,17 +24,17 @@ class TestExporter extends WenAbstractExporter{<br/>
 &emsp;&emsp;return 500;
 <br/>&emsp;}<br/>
 
-&emsp;/\*\*<br/>
-&emsp;\* @return string 或 array<br/>
-&emsp;\* 允许在excel末尾输出字符串，可以返回一个数组或者字符串<br/>
-&emsp;\* （默认为空，如果需要在excel表格后面输出提示或者其他信息，可在此输出（可换行））<br/>
-&emsp;\*/<br/>
+&emsp;/****<br/>
+&emsp;* @return string 或 array<br/>
+&emsp;* 允许在excel末尾输出字符串，可以返回一个数组或者字符串<br/>
+&emsp;* （默认为空，如果需要在excel表格后面输出提示或者其他信息，可在此输出（可换行））<br/>
+&emsp;*/<br/>
 &emsp;public function setFooter()<br/>
 &emsp;{<br/>
 &emsp;&emsp;return '';<br/>
 &emsp;}<br/>
 
-&emsp;/\*\*<br/>
+&emsp;/****<br/>
 &emsp;* @return string<br/>
 &emsp;* 允许excel表头输出字符串，可以返回一个数组或字符串<br/>
 &emsp;* （默认为空，如果需要在excel表头输出提示或者其他信息，可在此输出（可换行））<br/>
@@ -44,7 +44,7 @@ class TestExporter extends WenAbstractExporter{<br/>
 &emsp;&emsp;return '';<br/>
 &emsp;}<br/>
 
- &emsp;/\*\*<br/>
+ &emsp;/***<br/>
 &emsp;* @return string<br/>
 &emsp;* （此为默认方法）设置格式化方法，返回一个JavaScript匿名方法，参数一个数据集合和body字段<br/>
 &emsp;*/<br/>
@@ -64,7 +64,7 @@ class TestExporter extends WenAbstractExporter{<br/>
 &emsp;&emsp;SCRIPT;<br/>
 &emsp;}<br/>
 
-&emsp;/\*\*<br/>
+&emsp;/****<br/>
 &emsp;* @return string<br/>
 &emsp;* 设置excel导出文件的字体<br/>
 &emsp;* (默认为 "'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif")<br/>
@@ -74,7 +74,7 @@ class TestExporter extends WenAbstractExporter{<br/>
 &emsp;&emsp;return "'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif";<br/>
 &emsp;}<br/>
 
-&emsp;/\*\*<br/>
+&emsp;/****<br/>
 &emsp;* @return array<br/>
 &emsp;* 设置导入文件后缀名<br/>
 &emsp;* （默认为xlsx和xls）<br/>
@@ -84,7 +84,7 @@ class TestExporter extends WenAbstractExporter{<br/>
 &emsp;&emsp;return ['xlsx', 'xls'];<br/>
 &emsp;}<br/>
 
-&emsp;/\*\*<br/>
+&emsp;/****<br/>
 &emsp;* @param array $data<br/>
 &emsp;* 导入数据库处理<br/>
 &emsp;* （如果启用导入功能，可在此方法实现数据格式化并且导入数据库的功能）<br/>
