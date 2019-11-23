@@ -175,6 +175,10 @@ SCRIPT;
         ];
     }
 
+    /**
+     * @return string
+     * 设置excel导出文件的字体
+     */
     public function setFontFamily()
     {
         return "'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif";
@@ -215,6 +219,10 @@ SCRIPT;
         return $this->fileType;
     }
 
+    /**
+     * @return array
+     * 设置导入文件后缀名
+     */
     public function setImportTypes()
     {
         return ['xlsx', 'xls'];
@@ -237,5 +245,9 @@ SCRIPT;
         exit(0);
     }
 
+    /**
+     * @param array $data
+     * 导入数据处理
+     */
     public function import(array $data){}
 }
