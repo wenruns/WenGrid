@@ -24,7 +24,7 @@ class TestExporter extends WenAbstractExporter{<br/>
 &emsp;&emsp;return 500;
 <br/>&emsp;}<br/>
 
-&emsp;/\**<br/>
+&emsp;/\*\*<br/>
 &emsp;\* @return string 或 array<br/>
 &emsp;\* 允许在excel末尾输出字符串，可以返回一个数组或者字符串<br/>
 &emsp;\* （默认为空，如果需要在excel表格后面输出提示或者其他信息，可在此输出（可换行））<br/>
