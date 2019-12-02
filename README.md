@@ -12,7 +12,7 @@ laravel-admin导出大量数据内存不足的解决方案
 2、安装
 --------
 ```php
-composer require wen-grid/wen-grid
+composer require wenruns/grid
 ```
 
 3、使用教程
