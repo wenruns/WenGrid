@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="78494c78-5d8a-40ac-9982-bcf21e60d44d" name="Default Changelist" comment="" />
+    <list default="true" id="78494c78-5d8a-40ac-9982-bcf21e60d44d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,8 +73,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="175">
-                <caret line="8" column="67" selection-start-line="8" selection-start-column="67" selection-end-line="8" selection-end-column="67" />
+              <first_editor relative-caret-position="250">
+                <caret line="8" column="51" selection-start-line="8" selection-end-line="8" selection-end-column="51" />
               </first_editor>
               <second_editor />
             </state>
@@ -121,10 +123,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="63" />
-    <option name="y" value="61" />
+    <option name="x" value="119" />
+    <option name="y" value="78" />
     <option name="width" value="1741" />
-    <option name="height" value="913" />
+    <option name="height" value="967" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -193,18 +195,22 @@
       <workItem from="1574303777688" duration="3369000" />
       <workItem from="1574383154405" duration="1405000" />
       <workItem from="1574472256514" duration="8025000" />
-      <workItem from="1574643935665" duration="2272000" />
+      <workItem from="1574643935665" duration="2953000" />
+      <workItem from="1574728709940" duration="2018000" />
+      <workItem from="1574815770170" duration="131000" />
+      <workItem from="1574815941934" duration="767000" />
+      <workItem from="1574901374713" duration="2118000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37222000" />
+    <option name="totallyTimeSpent" value="42937000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1401919" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14658849" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -217,7 +223,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.38894907" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.38852814" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -225,6 +231,7 @@
       <window_info anchor="right" id="Word Book" order="3" side_tool="true" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="Api Debugger" order="5" />
+      <window_info anchor="right" id="Translation Assistant" order="6" weight="0.32995737" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.281975" />
@@ -302,8 +309,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="175">
-            <caret line="8" column="67" selection-start-line="8" selection-start-column="67" selection-end-line="8" selection-end-column="67" />
+          <first_editor relative-caret-position="250">
+            <caret line="8" column="51" selection-start-line="8" selection-end-line="8" selection-end-column="51" />
           </first_editor>
           <second_editor />
         </state>

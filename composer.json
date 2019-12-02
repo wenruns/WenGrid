@@ -1,20 +1,20 @@
 {
-    "name": "wen-grid/wen-grid",
-    "description": "针对于一些低端服务器或导出数据过大时出现内存不足的情况的解决方案",
-    "type": "library",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "wenruns",
-            "email": "1562194488@qq.com"
-        }
-    ],
-    "require": {
-
-    },
-    "autoload": {
-        "psr-4": {
-            "wen-grid\\wen-grid\\": "src/"
-        }
+  "name": "wen-grid/wen-grid",
+  "description": "针对于一些低端服务器或导出数据过大时出现内存不足的情况的解决方案",
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "wenruns",
+      "email": "1562194488@qq.com"
     }
+  ],
+  "require": {
+    "maatwebsite/excel": "~2.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "wen-grid\\wen-grid\\": "src/"
+    }
+  }
 }
