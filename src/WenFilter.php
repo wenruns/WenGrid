@@ -6,7 +6,7 @@
  * Time: 10:50
  */
 
-namespace Wen\Grid;
+namespace Wenruns\Grid;
 
 
 use Encore\Admin\Grid\Filter;

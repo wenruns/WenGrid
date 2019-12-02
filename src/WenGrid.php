@@ -6,7 +6,7 @@
  * Time: 15:27
  */
 
-namespace Wen\Grid;
+namespace Wenruns\Grid;
 
 
 use Closure;
