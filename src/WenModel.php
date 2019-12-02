@@ -6,7 +6,7 @@
  * Time: 19:39
  */
 
-namespace vendor\WenGrid;
+namespace Wen\Grid;
 
 
 use Encore\Admin\Grid\Model;
