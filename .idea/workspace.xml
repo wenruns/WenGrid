@@ -68,6 +68,9 @@
       <find>render</find>
       <find>makeFooter</find>
       <find>handleImportRequest</find>
+      <find>checkHtmlString</find>
+      <find>check</find>
+      <find>checkString</find>
     </findStrings>
     <replaceStrings>
       <replace>&amp;emsp;</replace>
@@ -177,18 +180,18 @@
       <workItem from="1575253429164" duration="381000" />
       <workItem from="1575254220560" duration="5939000" />
       <workItem from="1575273496305" duration="3553000" />
-      <workItem from="1575334880712" duration="3816000" />
+      <workItem from="1575334880712" duration="4187000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56626000" />
+    <option name="totallyTimeSpent" value="56997000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15298508" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15298508" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -201,7 +204,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.38786566" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.38786566" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
