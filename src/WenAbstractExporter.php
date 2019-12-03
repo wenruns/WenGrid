@@ -35,7 +35,7 @@ abstract class WenAbstractExporter extends AbstractExporter
      */
     public function setPerPage()
     {
-        return 500;
+        return 1000;
     }
 
     /**
@@ -53,6 +53,18 @@ abstract class WenAbstractExporter extends AbstractExporter
         $this->fileType = $type;
     }
 
+    /**
+     * @return string
+     * 允许excel表头输出字符串，可以返回一个数组或字符串
+     */
+    public function setHeader()
+    {
+        return <<<SCRIPT
+        function(data){
+            return '';
+        }
+SCRIPT;
+    }
 
     /**
      * @return string 或 array
@@ -60,17 +72,14 @@ abstract class WenAbstractExporter extends AbstractExporter
      */
     public function setFooter()
     {
-        return '';
+        return <<<SCRIPT
+        function(data){
+            return '';
+        }
+SCRIPT;
     }
 
-    /**
-     * @return string
-     * 允许excel表头输出字符串，可以返回一个数组或字符串
-     */
-    public function setHeader()
-    {
-        return '';
-    }
+
 
     /**
      * @return string

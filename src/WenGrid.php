@@ -89,7 +89,6 @@ class WenGrid extends Grid
     protected function handleExportRequest($forceExport = false)
     {
         if (!$scope = request(Grid\Exporter::$queryName)) {
-            (new Grid\Exporter($this))->resolve($this->exporter);
             return;
         }
 
