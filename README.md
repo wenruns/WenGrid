@@ -11,6 +11,13 @@ laravel-admin导出大量数据内存不足的解决方案
 
 2、安装
 --------
+（1）安装环境
+```
+laravel版本号：5.5.44
+laravel-admin版本号：1.6.10
+php版本号：7+
+```
+（2）安装
 ```php
 composer require wenruns/grid
 ```
