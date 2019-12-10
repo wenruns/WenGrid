@@ -16,6 +16,7 @@ laravel-admin导出大量数据内存不足的解决方案
 laravel版本号：5.5.44
 laravel-admin版本号：1.6.10
 php版本号：7+
+maatwebsite/excel版本号：~2.1.0
 ```
 （2）安装
 ```php

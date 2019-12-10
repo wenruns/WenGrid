@@ -15,6 +15,7 @@ use Encore\Admin\Layout\Content;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
+use Encore\Admin\Exception\Handler;
 
 class WenGrid extends Grid
 {
@@ -71,7 +72,7 @@ class WenGrid extends Grid
 
     public function getImportUrl()
     {
-        return $this->getExportUrl().'import';
+        return $this->getExportUrl() . 'import';
     }
 
     protected function handleImportRequest($scope)
@@ -119,7 +120,6 @@ class WenGrid extends Grid
     }
 
 
-
     public function render()
     {
         $this->handleExportRequest(true);
@@ -139,7 +139,6 @@ class WenGrid extends Grid
     {
         return $this->exporter;
     }
-
 
 
     /**
