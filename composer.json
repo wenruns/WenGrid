@@ -3,6 +3,7 @@
   "description": "针对于一些低端服务器或导出数据过大时出现内存不足的情况的解决方案",
   "type": "library",
   "license": "MIT",
+  "version": "v1.1.1",
   "homepage": "https://github.com/wenruns/wen-grid",
   "keywords": [
     "导出",
