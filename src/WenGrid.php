@@ -6,7 +6,7 @@
  * Time: 15:27
  */
 
-namespace Wenruns\MaYunGrid;
+namespace Wenruns\Grid;
 
 
 use Closure;

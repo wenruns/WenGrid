@@ -6,7 +6,7 @@
  * Time: 10:50
  */
 
-namespace Wenruns\MaYunGrid;
+namespace Wenruns\Grid;
 
 
 use Encore\Admin\Grid\Filter;
