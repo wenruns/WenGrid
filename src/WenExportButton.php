@@ -6,7 +6,7 @@
  * Time: 15:48
  */
 
-namespace Wenruns\Grid;
+namespace Wenruns\MaYunGrid;
 
 
 use Encore\Admin\Facades\Admin;

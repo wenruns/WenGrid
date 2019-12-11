@@ -6,7 +6,7 @@
  * Time: 19:39
  */
 
-namespace Wenruns\Grid;
+namespace Wenruns\MaYunGrid;
 
 
 use Encore\Admin\Grid\Model;
