@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\MessageBag;
 use Maatwebsite\Excel\Facades\Excel;
 
-abstract class WenAbstractExporter extends AbstractExporter
+class WenAbstractExporter extends AbstractExporter
 {
     protected $head = []; // excel头信息
 
@@ -80,12 +80,12 @@ SCRIPT;
     }
 
 
-
     /**
      * @return string
      * 设置格式化方法，返回一个JavaScript匿名方法，参数一个数据集合和body字段
      */
-    public function setFormat() {
+    public function setFormat()
+    {
         return <<<SCRIPT
     function(item, field){
         index = field.split('.');
@@ -178,7 +178,7 @@ SCRIPT;
         return [
             [
                 'limit' => [$limitNum]
-            ],[
+            ], [
                 'offset' => [$offset]
             ]
         ];
@@ -208,6 +208,7 @@ SCRIPT;
             'data' => $data,
         ];
     }
+
     public function getHead()
     {
         return $this->head;
@@ -258,5 +259,7 @@ SCRIPT;
      * @param array $data
      * 导入数据处理
      */
-    public function import(array $data){}
+    public function import(array $data)
+    {
+    }
 }

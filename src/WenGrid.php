@@ -154,15 +154,19 @@ class WenGrid extends Grid
 
 
     /**
-     * @param string $scope
-     *
-     * @return AbstractExporter
+     * Set exporter driver for Grid to export.
+     * @param $exporter
+     * @return $this
+     * @throws \Exception
      */
-//    protected function getExporter($scope)
-//    {
-//        //dump('getExporter---');
-//        (new Grid\Exporter($this))->resolve($this->exporter)->withScope($scope);
-//    }
+    public function exporter($exporter)
+    {
+        if (!($exporter instanceof WenAbstractExporter)) {
+            throw new \Exception('The param of the function "exporter" should be an instance of ' . get_class(new WenAbstractExporter()) . ', but ' . get_parent_class($exporter) . ' given.');
+        }
+        $this->exporter = $exporter;
+        return $this;
+    }
 
 
 }
