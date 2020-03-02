@@ -24,27 +24,6 @@ class WenGrid extends Grid
         'show_import' => false
     ];
 
-    public function __construct(Eloquent $model, Closure $builder = null)
-    {
-        $this->keyName = $model->getKeyName();
-        $this->model = new WenModel($model);
-
-        $this->columns = new Collection();
-        $this->rows = new Collection();
-        $this->builder = $builder;
-
-        $this->model()->setGrid($this);
-
-        $this->setupTools();
-        $this->setupFilter();
-
-        $this->handleExportRequest();
-
-        if (static::$initCallback instanceof Closure) {
-            call_user_func(static::$initCallback, $this);
-        }
-    }
-
 
     public function wenOptions($key, $value = null)
     {
