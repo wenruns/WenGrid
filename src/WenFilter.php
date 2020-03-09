@@ -23,12 +23,16 @@ class WenFilter extends Filter
      */
     public function execute($toArray = true, $exportOptions = [])
     {
+        if (method_exists($this->model->eloquent(), 'paginate')) {
+            $this->model->usePaginate(true);
+
+            return $this->model->buildData($toArray);
+        }
         $conditions = array_merge(
             $this->conditions(),
             $this->scopeConditions()
         );
         $conditions = array_merge($conditions, $exportOptions);
-//        dump($conditions, '==========');
         return $this->model->addConditions($conditions)->buildData($toArray);
     }
 

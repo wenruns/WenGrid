@@ -262,4 +262,33 @@ SCRIPT;
     public function import(array $data)
     {
     }
+
+
+    /**
+     * Export data with scope.
+     *
+     * @param string $scope
+     *
+     * @return $this
+     */
+    public function withScope($scope)
+    {
+        if ($scope == Grid\Exporter::SCOPE_ALL) {
+            return $this;
+        }
+
+        list($scope, $args) = explode(':', $scope);
+
+        if ($scope == Grid\Exporter::SCOPE_CURRENT_PAGE) {
+            $this->grid->model()->usePaginate(true);
+            $this->page = $args ?: 1;
+        }
+
+        if ($scope == Grid\Exporter::SCOPE_SELECTED_ROWS) {
+            $selected = explode(',', $args);
+            $this->grid->model()->whereIn($this->grid->model()->getTable() . '.' . $this->grid->getKeyName(), $selected);
+        }
+
+        return $this;
+    }
 }
