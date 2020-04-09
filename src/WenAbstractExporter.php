@@ -14,6 +14,7 @@ use Encore\Admin\Grid\Exporters\AbstractExporter;
 use Encore\Admin\Layout\Content;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\MessageBag;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -28,6 +29,44 @@ class WenAbstractExporter extends AbstractExporter
 
     protected $fileType = 'xlsx'; // 导出excel文件格式
 
+    protected $sheet_lines = 0;  // 每个sheet的条数
+
+    protected $sheet_wpx = []; // 单元格宽度
+
+
+    protected $footer_content = '';  // 脚部文本
+
+    protected $header_content = '';  // 头部文本
+
+
+    /**
+     * 设置excel单元格宽度
+     * @param $field
+     * @param int $w
+     */
+    protected function width($field, $w = -1)
+    {
+        $wt = [
+            'wpx' => $w,
+        ];
+        $key = array_search($field, $this->body);
+        if (isset($this->sheet_wpx[$key])) {
+            $this->sheet_wpx[$key] = $wt;
+        } else {
+            $this->sheet_wpx[] = $wt;
+        }
+    }
+
+
+    /**
+     * 获取excel单元格宽度设置
+     * @return array
+     */
+    public function getWidth()
+    {
+        return $this->sheet_wpx;
+    }
+
 
     /**
      * @return int
@@ -37,6 +76,7 @@ class WenAbstractExporter extends AbstractExporter
     {
         return 1000;
     }
+
 
     /**
      * @param $head
@@ -53,54 +93,48 @@ class WenAbstractExporter extends AbstractExporter
         $this->fileType = $type;
     }
 
+
     /**
-     * @return string
+     * 设置每个sheet的记录条数
+     * @param int $lines
+     * @return $this
+     */
+    public function sheetLines($lines = 5000)
+    {
+        $this->sheet_lines = $lines;
+        return $this;
+    }
+
+    /**
+     * 获取每个sheet的记录条数
+     * @return int
+     */
+    public function getSheetLines()
+    {
+        return $this->sheet_lines;
+    }
+
+
+    /**
      * 允许excel表头输出字符串，可以返回一个数组或字符串
-     */
-    public function setHeader()
-    {
-        return <<<SCRIPT
-        function(data){
-            return '';
-        }
-SCRIPT;
-    }
-
-    /**
-     * @return string 或 array
-     * 允许在excel末尾输出字符串，可以返回一个数组或者字符串
-     */
-    public function setFooter()
-    {
-        return <<<SCRIPT
-        function(data){
-            return '';
-        }
-SCRIPT;
-    }
-
-
-    /**
+     * @param array $data
      * @return string
-     * 设置格式化方法，返回一个JavaScript匿名方法，参数一个数据集合和body字段
      */
-    public function setFormat()
+    public function setHeader($data = [])
     {
-        return <<<SCRIPT
-    function(item, field){
-        index = field.split('.');
-        index.forEach(function(field, dex){
-            if (!item || !item[field]) {
-                item = '';
-                return;
-            }
-            item = item[field];
-        });
-        
-        return item;
+        return '';
     }
-SCRIPT;
+
+    /**
+     * 允许在excel末尾输出字符串，可以返回一个数组或者字符串
+     * @param array $data
+     * @return string
+     */
+    public function setFooter($data = [])
+    {
+        return '';
     }
+
 
     /**
      * @return array|mixed
@@ -117,9 +151,18 @@ SCRIPT;
      */
     protected function makeData()
     {
-        $data = $this->format($this->getData(true));
-
-        return $data;
+        $data = $this->getData(true);
+        $cache_data = Session::pull('wen_export_data_cache', []);
+        if (count($data) < $this->setPerPage()) {
+            $cache_data = array_merge($cache_data, $data);
+            $this->footer_content = $this->setFooter($cache_data);
+            $this->header_content = $this->setHeader($cache_data);
+        } else {
+            $cache_data = array_merge($cache_data, $data);
+            Session::put('wen_export_data_cache', $cache_data);
+        }
+        Session::save();
+        return $this->format($data);
     }
 
     /**
@@ -129,7 +172,14 @@ SCRIPT;
      */
     public function format($data)
     {
-        return $data;
+        $res = array_map(function ($item) {
+            $arr = [];
+            foreach ($this->body as $field) {
+                $arr[] = array_get($item, $field);
+            }
+            return $arr;
+        }, $data);
+        return $res;
     }
 
     /**
@@ -146,8 +196,8 @@ SCRIPT;
 
 
     /**
-     * @return array
      * 分页查询处理
+     * @return array
      */
     protected function getExportOptions()
     {
@@ -185,8 +235,8 @@ SCRIPT;
     }
 
     /**
-     * @return string
      * 设置excel导出文件的字体
+     * @return string
      */
     public function setFontFamily()
     {
@@ -194,6 +244,7 @@ SCRIPT;
     }
 
     /**
+     * 返回导出数据
      * @param $data
      * @param string $msg
      * @return array
@@ -206,24 +257,43 @@ SCRIPT;
             'code' => 2000,
             'msg' => $msg,
             'data' => $data,
+            'width' => $this->getWidth(),
+            'header' => $this->header_content,
+            'footer' => $this->footer_content,
         ];
     }
 
+    /**
+     * 获取头信息
+     * @return array
+     */
     public function getHead()
     {
         return $this->head;
     }
 
+    /**
+     * 获取body字段信息
+     * @return array
+     */
     public function getBody()
     {
         return $this->body;
     }
 
+    /**
+     * 获取文件名称
+     * @return |null
+     */
     public function getFileName()
     {
         return $this->fileName;
     }
 
+    /**
+     * 获取导出文件格式
+     * @return string
+     */
     public function getType()
     {
         return $this->fileType;
