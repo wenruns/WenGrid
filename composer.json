@@ -4,7 +4,7 @@
   "type": "library",
   "license": "MIT",
   "version": "1.1.2",
-  "homepage": "https://github.com/wenruns/wen-grid",
+  "homepage": "https://github.com/wenruns/wen-grid.git",
   "keywords": [
     "导出",
     "内存不足",
