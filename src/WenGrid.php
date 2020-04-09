@@ -20,6 +20,13 @@ use Encore\Admin\Exception\Handler;
 class WenGrid extends Grid
 {
 
+
+    public function __construct(Eloquent $model, Closure $builder = null)
+    {
+        parent::__construct($model, $builder);
+        $this->setupFilter();
+    }
+
     protected $wenOptins = [
         'show_import' => false
     ];
@@ -127,7 +134,6 @@ class WenGrid extends Grid
      */
     protected function setupFilter()
     {
-        //dump('setupFilter---');
         $this->filter = new WenFilter($this->model());
     }
 
@@ -146,6 +152,5 @@ class WenGrid extends Grid
         $this->exporter = $exporter;
         return $this;
     }
-
 
 }
