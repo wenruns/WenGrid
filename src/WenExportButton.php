@@ -171,7 +171,7 @@ class WenExportButton extends ExportButton
                 var url = event.target.getAttribute('data-href');
                 var data = {
                     pageN: pageN_{$this->key},
-                    per_page: {$this->grid->perPage}
+                    per_page: $(".{$this->grid->getPerPageName()} option:checked").html()
                 };
                 switch (target) {
                     case 'selected':
@@ -225,6 +225,24 @@ class WenExportButton extends ExportButton
                     async : true,
                     success: function(res) {
                         res = JSON.parse(res)
+                        if(res.code==200){
+                            hideTipsBox();
+                            res = res.data;
+                            if(res.callback){
+                                eval('let callback = ' + res.callback + ';  callback(res.data);');
+                            }else if(res.msg){
+                                Swal.fire({
+                                    s
+                                }).then((isConfirm) => {
+                                    if(res.isConfirm){
+                                        eval('let doAction='+res.isConfirm+';  doAction(res.data);');
+                                    }
+                                });
+                            }
+                            return false;
+                        }
+                        
+                        
                         if(!sheet_w_{$this->key}.lenght){
                             sheet_w_{$this->key} = res.width;
                         }

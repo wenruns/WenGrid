@@ -39,6 +39,15 @@ class WenAbstractExporter extends AbstractExporter
     protected $header_content = '';  // 头部文本
 
 
+    protected $callback = null;
+
+    public function callback($func)
+    {
+        $this->callback = $func;
+        return $this;
+    }
+
+
     /**
      * 设置excel单元格宽度
      * @param $field
@@ -55,6 +64,7 @@ class WenAbstractExporter extends AbstractExporter
         } else {
             $this->sheet_wpx[] = $wt;
         }
+        return $this;
     }
 
 
@@ -91,6 +101,7 @@ class WenAbstractExporter extends AbstractExporter
         $this->body = $body;
         $this->fileName = $fileName;
         $this->fileType = $type;
+        return $this;
     }
 
 
@@ -142,6 +153,9 @@ class WenAbstractExporter extends AbstractExporter
      */
     public function export()
     {
+        if (is_callable($this->callback)) {
+            return $this->response(call_user_func($this->callback, request()->toArray(), $this), '用户自定义回调处理导出功能');
+        }
         return $this->response($this->makeData());
     }
 
@@ -205,6 +219,8 @@ class WenAbstractExporter extends AbstractExporter
         $limitNum = $this->setPerPage(); // 每次查询最大限制，防止服务器内存溢出问题
         $scope = request('_export_'); // 导出标志（全部：all，当前页：page:n，选择行：selected:ids，指定范围页：page:）
         $nowPage = request('pageN');
+
+//        dd(request()->toArray(), $this->grid->getPerPageName());
         if (strpos($scope, 'page:') !== false) {
             $perPage = request('per_page'); // 当前每页显示的条数
             if ($range = request('pageRange')) { // 导出指定页数
@@ -251,6 +267,15 @@ class WenAbstractExporter extends AbstractExporter
      */
     protected function response($data, $msg = '')
     {
+        if (is_callable($this->callback)) {
+            return [
+                'finished' => true,
+                'status' => true,
+                'code' => 200,
+                'msg' => $msg,
+                'data' => $data,
+            ];
+        }
         return [
             'finished' => count($data) < $this->setPerPage() ? true : false,
             'status' => true,
@@ -360,5 +385,10 @@ class WenAbstractExporter extends AbstractExporter
         }
 
         return $this;
+    }
+
+    public function getGrid()
+    {
+        return $this->grid;
     }
 }
