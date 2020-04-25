@@ -225,6 +225,25 @@ class WenExportButton extends ExportButton
                     async : true,
                     success: function(res) {
                         res = JSON.parse(res)
+                        
+                        if(!res.status){
+                            hideTipsBox();
+                            if(res.msg){
+                                Swal.fire({
+                                    title: '提示', //标题
+                                    type: 'warning', // 弹框类型
+                                    html: res.msg, // HTML
+                                    confirmButtonColor: '#3085d6',// 确定按钮的 颜色
+                                    confirmButtonText: '知道了',// 确定按钮的 文字
+                                    allowOutsideClick:false,
+                                }).then((isConfirm) => {
+                                    
+                                });
+                            }
+                            return false;
+                        }
+                        
+                        
                         if(res.code==200){
                             hideTipsBox();
                             res = res.data;
