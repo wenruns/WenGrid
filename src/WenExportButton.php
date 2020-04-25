@@ -232,7 +232,12 @@ class WenExportButton extends ExportButton
                                 eval('let callback = ' + res.callback + ';  callback(res.data);');
                             }else if(res.msg){
                                 Swal.fire({
-                                    s
+                                    title: '提示', //标题
+                                    type: '', // 弹框类型
+                                    html: res.msg, // HTML
+                                    confirmButtonColor: '#3085d6',// 确定按钮的 颜色
+                                    confirmButtonText: '确定',// 确定按钮的 文字
+                                    allowOutsideClick:false,
                                 }).then((isConfirm) => {
                                     if(res.isConfirm){
                                         eval('let doAction='+res.isConfirm+';  doAction(res.data);');

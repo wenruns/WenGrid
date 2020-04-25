@@ -21,11 +21,11 @@ class WenGrid extends Grid
 {
 
 
-    public function __construct(Eloquent $model, Closure $builder = null)
-    {
-        parent::__construct($model, $builder);
-        $this->setupFilter();
-    }
+//    public function __construct(Eloquent $model, Closure $builder = null)
+//    {
+//        parent::__construct($model, $builder);
+//        $this->setupFilter();
+//    }
 
     protected $wenOptins = [
         'show_import' => false
@@ -132,9 +132,10 @@ class WenGrid extends Grid
      *
      * @return void
      */
-    protected function setupFilter()
+    protected function initFilter()
     {
         $this->filter = new WenFilter($this->model());
+        return $this;
     }
 
 

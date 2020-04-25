@@ -38,13 +38,16 @@ class WenAbstractExporter extends AbstractExporter
 
     protected $header_content = '';  // 头部文本
 
+    protected $custom_export_processor = false; // 启用自定义导出处理程序
 
-    protected $callback = null;
 
-    public function callback($func)
+    /**
+     * 用户自定义导出处理
+     * @return bool
+     */
+    public function exportProcessor()
     {
-        $this->callback = $func;
-        return $this;
+        // Todo:自定义导出处理功能
     }
 
 
@@ -153,8 +156,8 @@ class WenAbstractExporter extends AbstractExporter
      */
     public function export()
     {
-        if (is_callable($this->callback)) {
-            return $this->response(call_user_func($this->callback, request()->toArray(), $this), '用户自定义回调处理导出功能');
+        if ($this->custom_export_processor) {
+            return $this->response($this->exportProcessor(), '用户自定义回调处理导出功能');
         }
         return $this->response($this->makeData());
     }
@@ -267,7 +270,7 @@ class WenAbstractExporter extends AbstractExporter
      */
     protected function response($data, $msg = '')
     {
-        if (is_callable($this->callback)) {
+        if ($this->custom_export_processor) {
             return [
                 'finished' => true,
                 'status' => true,
