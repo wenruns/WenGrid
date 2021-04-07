@@ -11,6 +11,7 @@ namespace Wenruns\Grid;
 
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
+use Encore\Admin\Grid;
 use Encore\Admin\Grid\Model;
 use Encore\Admin\Grid\Tools\ExportButton;
 use GuzzleHttp\Client;
@@ -175,7 +176,9 @@ class WenExportButton extends ExportButton
                 };
                 switch (target) {
                     case 'selected':
-                        url += selectedRows().join(',')
+                        url += selectedRows().join(',');
+                        console.log(selectedRows());
+                        console.log(selectedRows().join(','));
                         break;
                     case 'pages':
                         
@@ -225,25 +228,6 @@ class WenExportButton extends ExportButton
                     async : true,
                     success: function(res) {
                         res = JSON.parse(res)
-                        
-                        if(!res.status){
-                            hideTipsBox();
-                            if(res.msg){
-                                Swal.fire({
-                                    title: '提示', //标题
-                                    type: 'warning', // 弹框类型
-                                    html: res.msg, // HTML
-                                    confirmButtonColor: '#3085d6',// 确定按钮的 颜色
-                                    confirmButtonText: '知道了',// 确定按钮的 文字
-                                    allowOutsideClick:false,
-                                }).then((isConfirm) => {
-                                    
-                                });
-                            }
-                            return false;
-                        }
-                        
-                        
                         if(res.code==200){
                             hideTipsBox();
                             res = res.data;
@@ -251,11 +235,11 @@ class WenExportButton extends ExportButton
                                 eval('let callback = ' + res.callback + ';  callback(res.data);');
                             }else if(res.msg){
                                 Swal.fire({
-                                    title: '提示', //标题
-                                    type: '', // 弹框类型
-                                    html: res.msg, // HTML
-                                    confirmButtonColor: '#3085d6',// 确定按钮的 颜色
-                                    confirmButtonText: '确定',// 确定按钮的 文字
+                                    title: '提示', 
+                                    type: '', 
+                                    html: res.msg, 
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: '确定',
                                     allowOutsideClick:false,
                                 }).then((isConfirm) => {
                                     if(res.isConfirm){

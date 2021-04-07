@@ -25,7 +25,6 @@ class WenFilter extends Filter
     {
         if (method_exists($this->model->eloquent(), 'paginate')) {
             $this->model->usePaginate(true);
-
             return $this->model->buildData($toArray);
         }
         $conditions = array_merge(
